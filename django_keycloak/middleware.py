@@ -93,11 +93,14 @@ class KeycloakStatelessBearerAuthenticationMiddleware(BaseKeycloakMiddleware):
         if self.header_key not in request.META:
             return HttpResponseNotAuthorized(
                 attributes={'realm': request.realm.name})
+        
+        try:
+            access_token = request.META[self.header_key].split(' ')[1]
+        except (KeyError, IndexError):
+            return HttpResponseNotAuthorized(
+                attributes={'realm': request.realm.name})
 
-        user = authenticate(
-            request=request,
-            access_token=request.META[self.header_key].split(' ')[1]
-        )
+        user = authenticate(request=request, access_token=access_token)
 
         if user is None:
             return HttpResponseNotAuthorized(
