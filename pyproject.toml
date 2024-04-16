@@ -20,19 +20,19 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
+
 [tool.poetry.urls]
 "Bug Tracker" = "https://github.com/skamansam/django-keycloak/issues"
 
-[tool.poe.tasks]
+[tool.poetry.tasks]
 test         = "pytest --cov=my_app"                         # a simple command task
 serve.script = "my_app.service:run(debug=True)"              # python script based task
 tunnel.shell = "ssh -N -L 0.0.0.0:8080:$PROD:8080 $PROD &"   # (posix) shell based task
 
-
 [tool.poetry.dependencies]
 python = "^3.11"
 Django = "^4.2.4"
-python-keycloak-client = "^0.2.3"
+python-keycloak-client-pkg = "^0.3.0"
 
 [tool.poetry.group.dev.dependencies]
 django-dynamic-fixtures = "^0.2.1"
